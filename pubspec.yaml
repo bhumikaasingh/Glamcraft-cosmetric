@@ -58,6 +58,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  json_serializable: ^6.4.0
+  flutter_riverpod: ^1.0.0
+  shared_preferences: ^2.0.11
 
 
  

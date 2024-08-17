@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:final_assignment/app/constant/api_endpoint.dart';
 import 'package:final_assignment/core/failure/failure.dart';
 import 'package:final_assignment/core/networking/remote/http_service.dart';
-import 'package:final_assignment/features/product/data/model/product_api_model.dart';
+import 'package:final_assignment/features/product/data/model/product_model.dart';
 import 'package:final_assignment/features/product/domain/entity/product_entiry.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,7 +36,7 @@ class ProductRemoteDatasource {
         return Right((response.data['products'] as List)
             .map((product) => ProductApiModel.fromJson(product).toEntity())
             .toList());
-        
+
         // GetAllProductDTO productAddDTO = GetAllProductDTO.fromJson(response.data);
         // return Right(ProductApiModel.toEntityList(productAddDTO.data));
       } else {

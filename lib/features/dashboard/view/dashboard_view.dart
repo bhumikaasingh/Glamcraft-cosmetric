@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:final_assignment/app/navigator/navigator.dart';
 import 'package:final_assignment/core/utils/asset_provider.dart';
-import 'package:final_assignment/core/utils/util.dart';
+// import 'package:final_assignment/core/utils/util.dart';
 import 'package:final_assignment/features/authentication/presentation/view/signin_view.dart';
 import 'package:final_assignment/features/cart/presentation/view/cart_view.dart';
 import 'package:final_assignment/features/favourite/presentation/view/favourite_view.dart';
@@ -11,6 +11,7 @@ import 'package:final_assignment/features/product/presentation/viewmodel/product
 import 'package:final_assignment/features/profile/presentation/view/profile_view.dart';
 import 'package:final_assignment/features/sensors/domain/usecases/double_shake_use_case.dart';
 import 'package:final_assignment/features/sensors/domain/usecases/gyroscope_usecase.dart';
+import 'package:final_assignment/features/product/presentation/view/shop_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +37,7 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
   final List<Widget> bottomScreens = [
     const HomeView(),
     const CartView(),
-    const FavouriteView(),
+    const ShopView(),
     const ProfileView(),
   ];
 
@@ -118,7 +119,8 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
           BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favourite'),
+              icon: Icon(Icons.local_convenience_store_outlined),
+              label: 'Shop'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),

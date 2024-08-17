@@ -2,10 +2,8 @@ import 'package:final_assignment/core/utils/asset_provider.dart';
 import 'package:final_assignment/core/utils/util.dart';
 import 'package:final_assignment/features/authentication/presentation/view/signup_view.dart';
 import 'package:final_assignment/features/authentication/presentation/view_model/auth_view_model.dart';
-
 import 'package:final_assignment/screen/dashboard.dart';
 import 'package:final_assignment/screen/signup_page.dart';
-
 import 'package:final_assignment/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -134,14 +132,14 @@ class _SignInPageViewState extends ConsumerState<SignInPageView> {
                       Center(
                         child: ElevatedButton(
                           onPressed: () async {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => HomePage()));
-                            await ref
-                                .read(authViewModelProvider.notifier)
-                                .signInPage(_emailController.text,
-                                    _passwordController.text);
+                            if (_formKey.currentState?.validate() ?? false) {
+                              await ref
+                                  .read(authViewModelProvider.notifier)
+                                  .signInPage(
+                                    _emailController.text,
+                                    _passwordController.text,
+                                  );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.lightGreen,
@@ -199,7 +197,9 @@ class _SignInPageViewState extends ConsumerState<SignInPageView> {
                         child: Column(
                           children: [
                             ElevatedButton.icon(
-                              onPressed: () {},
+                              onPressed: () {
+                                // Handle Google sign-in
+                              },
                               icon: Image.asset(
                                 Assets.images.GoogleLogo,
                                 height: 20,

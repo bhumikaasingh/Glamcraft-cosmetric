@@ -5,7 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await HiveService().init();
-
+  
+  try {
+    await HiveService().init();
+  } catch (e, stackTrace) {
+    // Handle the error, log it, or show a message
+    print('Failed to initialize Hive: $e');
+    print(stackTrace);
+  }
+  
   runApp(const ProviderScope(child: App()));
 }
