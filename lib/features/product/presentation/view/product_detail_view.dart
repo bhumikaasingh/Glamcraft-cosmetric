@@ -52,7 +52,6 @@ class ProductDetailsView extends ConsumerWidget {
                           return Column(
                             children: reviews
                                 .map((review) => ListTile(
-                                      title: Text(review.userId),
                                       subtitle: Text(review.reviewText),
                                       trailing: Text('${review.rating}/5'),
                                     ))

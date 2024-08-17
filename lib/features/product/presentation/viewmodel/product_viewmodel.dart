@@ -43,8 +43,8 @@ final productDetailsProvider =
 
 final productReviewsProvider =
     FutureProvider.family<List<Review>, String>((ref, productId) async {
-  final response = await Dio().get(
-      '${ApiEndpoints.baseUrl}${ApiEndpoints.getSingleProduct}$productId/reviews');
+  final response = await Dio()
+      .get('${ApiEndpoints.baseUrl}${ApiEndpoints.getReviews}$productId');
   if (response.statusCode == 200) {
     return (response.data['reviews'] as List)
         .map((json) => Review.fromJson(json))

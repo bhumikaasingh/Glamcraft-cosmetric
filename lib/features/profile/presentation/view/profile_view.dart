@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import '../../../Orders/presentation/view/order_view.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -16,7 +17,8 @@ class _ProfileViewState extends State<ProfileView> {
   String _location = 'Kathmandu';
   String _phoneNumber = '+977-9835445327';
 
-  void _updateProfile(String name, String email, String location, String phoneNumber, String imagePath) {
+  void _updateProfile(String name, String email, String location,
+      String phoneNumber, String imagePath) {
     setState(() {
       _name = name;
       _email = email;
@@ -30,6 +32,15 @@ class _ProfileViewState extends State<ProfileView> {
     // Navigate to the SignInView page after logout
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => const SignInView()),
+    );
+  }
+
+  void _viewOrders(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              OrderListView()), // Adjust this to your OrderViewPage route
     );
   }
 
@@ -112,6 +123,21 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 child:
                     const Text('Edit Profile', style: TextStyle(fontSize: 18)),
+              ),
+              const SizedBox(height: 10),
+
+              // My Orders Button
+              ElevatedButton(
+                onPressed: () => _viewOrders(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 36, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text('My Orders', style: TextStyle(fontSize: 18)),
               ),
               const SizedBox(height: 10),
 

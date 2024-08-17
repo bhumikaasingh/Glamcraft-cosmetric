@@ -1,37 +1,30 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'review_model.g.dart';
-
-@JsonSerializable()
 class Review {
-  @JsonKey(name: '_id')
   final String id;
-
-  @JsonKey(name: 'productId')
-  final String productId;
-
-  @JsonKey(name: 'userId')
-  final String userId;
-
-  @JsonKey(name: 'rating')
+  final String? productId;
+  final String? userId; // Make this nullable
   final int rating;
-
-  @JsonKey(name: 'reviewText')
   final String reviewText;
-
-  @JsonKey(name: 'createdAt')
-  final String createdAt;
+  final DateTime createdAt;
 
   Review({
     required this.id,
-    required this.productId,
-    required this.userId,
+    this.productId,
+    this.userId,
     required this.rating,
     required this.reviewText,
     required this.createdAt,
   });
 
-  factory Review.fromJson(Map<String, dynamic> json) => _$ReviewFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ReviewToJson(this);
+  factory Review.fromJson(Map<String, dynamic> json) {
+    return Review(
+      id: json['_id'],
+      productId: json['productId'],
+      userId: json['userId'], // Handle as nullable
+      rating: json['rating'],
+      reviewText: json['reviewText'],
+      createdAt: DateTime.parse(json['createdAt']),
+    );
+  }
 }
