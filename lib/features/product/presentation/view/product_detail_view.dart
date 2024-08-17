@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../viewmodel/product_viewmodel.dart';
 import '../../../../app/constant/api_endpoint.dart';
+import '../../data/model/review_model.dart';
 
 class ProductDetailsView extends ConsumerWidget {
   final String productId;
@@ -13,6 +14,10 @@ class ProductDetailsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productAsyncValue = ref.watch(productDetailsProvider(productId));
     final reviewsAsyncValue = ref.watch(productReviewsProvider(productId));
+    final productViewModel = ref.watch(productViewModelProvider.notifier);
+
+    final reviewTextController = TextEditingController();
+    final ratingController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -50,12 +55,15 @@ class ProductDetailsView extends ConsumerWidget {
                             return Text('No reviews yet');
                           }
                           return Column(
-                            children: reviews
-                                .map((review) => ListTile(
-                                      subtitle: Text(review.reviewText),
-                                      trailing: Text('${review.rating}/5'),
-                                    ))
-                                .toList(),
+                            children: reviews.map((review) {
+                              return ListTile(
+                                title: Text(review.userId ??
+                                    'Anonymous'), // Display userId or 'Anonymous'
+                                subtitle: Text(review.reviewText ??
+                                    'No review text'), // Handle nullable reviewText
+                                trailing: Text('${review.rating}/5'),
+                              );
+                            }).toList(),
                           );
                         },
                         loading: () =>
@@ -66,7 +74,51 @@ class ProductDetailsView extends ConsumerWidget {
                       Text('Add a Review',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
-                      // Add review form goes here
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: ratingController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                labelText: 'Rating (1-5)',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            TextField(
+                              controller: reviewTextController,
+                              decoration: InputDecoration(
+                                labelText: 'Review Text',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                final rating =
+                                    int.tryParse(ratingController.text) ?? 1;
+                                final reviewText = reviewTextController.text;
+
+                                final review = Review(
+                                  id: '', // Generate an ID if necessary or leave empty if backend handles it
+                                  productId: productId,
+                                  userId: ApiEndpoints.userId,
+                                  rating: rating,
+                                  reviewText: reviewText.isNotEmpty
+                                      ? reviewText
+                                      : null, // Ensure reviewText is nullable
+                                  createdAt: DateTime.now(),
+                                );
+
+                                productViewModel.addReview(review);
+                              },
+                              child: Text('Submit Review'),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

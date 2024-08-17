@@ -4,22 +4,23 @@ part 'order_model.g.dart';
 
 @JsonSerializable()
 class Order {
-  final String id;
-  final String userId;
-  final List<OrderItem> items;
-  final double totalAmount;
-  final String status;
-  final String tracking;
-  final DateTime createdAt;
+  @JsonKey(name: '_id')
+  final String? id;
+  final String? userId;
+  final List<OrderItem>? items;
+  final double? totalAmount;
+  final String? status;
+  final String? tracking;
+  final DateTime? createdAt;
 
   Order({
-    required this.id,
-    required this.userId,
-    required this.items,
-    required this.totalAmount,
-    required this.status,
-    required this.tracking,
-    required this.createdAt,
+    this.id,
+    this.userId,
+    this.items,
+    this.totalAmount,
+    this.status,
+    this.tracking,
+    this.createdAt,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
@@ -28,12 +29,12 @@ class Order {
 
 @JsonSerializable()
 class OrderItem {
-  final String productId;
-  final int quantity;
+  final String? productId; // Made nullable
+  final int? quantity; // Made nullable
 
   OrderItem({
-    required this.productId,
-    required this.quantity,
+    this.productId,
+    this.quantity,
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) =>

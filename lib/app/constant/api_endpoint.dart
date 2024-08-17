@@ -16,7 +16,7 @@ class ApiEndpoints {
   static const String createReview = "api/reviews/create";
   static const String createOrder = "api/orders/create";
   static const String getOrders = "api/orders";
-  static const String getSingleOrder = "api/orders/";
+  static const String getSingleOrder = "api/orders/get_single_order/";
   static const String getCart = "api/carts";
   static const String createCart = "api/carts/create";
   static const String updateUserProfile = "api/user/update-profile/";
