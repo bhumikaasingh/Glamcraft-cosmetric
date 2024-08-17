@@ -127,7 +127,7 @@ class CartView extends ConsumerWidget {
                             : null,
                         title: Text(product.name),
                         subtitle: Text(
-                            'Quantity: ${item.quantity}\nPrice: \$${product.price.toStringAsFixed(2)}'),
+                            'Quantity: ${item.quantity}\nPrice: \Rs. ${product.price.toStringAsFixed(2)}'),
                       ),
                       loading: () => ListTile(
                         title: Text('Loading product details...'),

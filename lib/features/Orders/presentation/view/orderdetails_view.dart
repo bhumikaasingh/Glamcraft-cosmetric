@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Update import path accordingly
 import '../viewmodel/order_viewmodel.dart';
-import '../../../../app/constant/api_endpoint.dart';
-import '../../data/order_model.dart'; // Import your Order model
+import '../../../product/presentation/viewmodel/product_viewmodel.dart';
 
 class OrderDetailView extends ConsumerWidget {
   final String orderId;
@@ -34,7 +32,41 @@ class OrderDetailView extends ConsumerWidget {
                 Text('Tracking: ${order.tracking ?? "Unknown"}'),
                 SizedBox(height: 10),
                 Text('Created At: ${order.createdAt?.toLocal() ?? "Unknown"}'),
-                // Add more details if needed
+                SizedBox(height: 20),
+                Text('Ordered Products:',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: order.items?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final productId = order.items?[index].productId;
+
+                    if (productId == null) {
+                      return ListTile(
+                        title: Text('Unknown Product'),
+                        subtitle: Text('Product details unavailable'),
+                      );
+                    }
+
+                    final productAsyncValue =
+                        ref.watch(productDetailsProvider(productId!));
+
+                    return productAsyncValue.when(
+                      data: (product) {
+                        return ListTile(
+                          title: Text(product.name),
+                          subtitle: Text('\Rs. ${product.price}'),
+                          trailing: Text(
+                              'Quantity: ${order.items?[index].quantity ?? "N/A"}'),
+                        );
+                      },
+                      loading: () => Center(child: CircularProgressIndicator()),
+                      error: (e, stack) =>
+                          Text('Error loading product details: $e'),
+                    );
+                  },
+                ),
               ],
             ),
           );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dio/dio.dart';
 import '../viewmodel/product_viewmodel.dart';
 import '../../../../app/constant/api_endpoint.dart';
 import '../../data/model/review_model.dart';
@@ -9,6 +10,35 @@ class ProductDetailsView extends ConsumerWidget {
 
   const ProductDetailsView({Key? key, required this.productId})
       : super(key: key);
+
+  Future<void> _addToCart(BuildContext context, WidgetRef ref) async {
+    try {
+      final response = await Dio().post(
+        '${ApiEndpoints.baseUrl}${ApiEndpoints.createCart}',
+        data: {
+          "userId": ApiEndpoints.userId,
+          "products": [
+            {
+              "productId": productId,
+              "quantity": 1, // Default quantity of 1 for simplicity
+            }
+          ],
+        },
+      );
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Product added to cart successfully')),
+        );
+      } else {
+        throw Exception('Failed to add to cart');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,6 +76,11 @@ class ProductDetailsView extends ConsumerWidget {
                       SizedBox(height: 10),
                       Text(product.description),
                       SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () => _addToCart(context, ref),
+                        child: Text('Add to Cart'),
+                      ),
+                      SizedBox(height: 20),
                       Text('Reviews',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
@@ -57,10 +92,8 @@ class ProductDetailsView extends ConsumerWidget {
                           return Column(
                             children: reviews.map((review) {
                               return ListTile(
-                                title: Text(review.userId ??
-                                    'Anonymous'), // Display userId or 'Anonymous'
-                                subtitle: Text(review.reviewText ??
-                                    'No review text'), // Handle nullable reviewText
+                                title: Text(review.userId),
+                                subtitle: Text(review.reviewText),
                                 trailing: Text('${review.rating}/5'),
                               );
                             }).toList(),
@@ -102,13 +135,11 @@ class ProductDetailsView extends ConsumerWidget {
                                 final reviewText = reviewTextController.text;
 
                                 final review = Review(
-                                  id: '', // Generate an ID if necessary or leave empty if backend handles it
+                                  id: '', // You might want to generate or get this ID
                                   productId: productId,
                                   userId: ApiEndpoints.userId,
                                   rating: rating,
-                                  reviewText: reviewText.isNotEmpty
-                                      ? reviewText
-                                      : null, // Ensure reviewText is nullable
+                                  reviewText: reviewText,
                                   createdAt: DateTime.now(),
                                 );
 

@@ -3,13 +3,12 @@ class ApiEndpoints {
 
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
-  static const String baseUrl = "http://192.168.1.124:5500/";
+  static const String baseUrl = "http://192.168.1.97:5500/";
   // ====================== Auth Routes ======================
   static const String login = "api/user/login";
   static const String register = "api/user/create";
   static const String getProducts = "api/products/get_all_products";
   static const limitPage = 5;
-
   static const String getSingleProduct = "api/products/get_single_product/";
   static const String getCategories = "api/categories";
   static const String getReviews = "api/reviews/";
@@ -20,6 +19,7 @@ class ApiEndpoints {
   static const String getCart = "api/carts";
   static const String createCart = "api/carts/create";
   static const String updateUserProfile = "api/user/update-profile/";
+  static const String profile = "api/user/profile";
 
   static const String imageUrl = "http://10.1.16.134:5500/uploads/";
   static const String uploadImage = "auth/uploadImage";

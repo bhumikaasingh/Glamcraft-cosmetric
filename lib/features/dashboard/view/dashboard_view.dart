@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:final_assignment/app/navigator/navigator.dart';
-import 'package:final_assignment/core/utils/asset_provider.dart';
 // import 'package:final_assignment/core/utils/util.dart';
 import 'package:final_assignment/features/authentication/presentation/view/signin_view.dart';
 import 'package:final_assignment/features/cart/presentation/view/cart_view.dart';
-import 'package:final_assignment/features/favourite/presentation/view/favourite_view.dart';
 import 'package:final_assignment/features/home/presentation/view/home_view.dart';
 import 'package:final_assignment/features/product/presentation/viewmodel/product_viewmodel.dart';
 import 'package:final_assignment/features/profile/presentation/view/profile_view.dart';
@@ -38,7 +36,7 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
     const HomeView(),
     CartView(),
     const ShopView(),
-    const ProfileView(),
+    ProfileView(),
   ];
 
   @override
