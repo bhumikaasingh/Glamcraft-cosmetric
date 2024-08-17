@@ -4,6 +4,7 @@ part 'cart_model.g.dart';
 
 @JsonSerializable()
 class Cart {
+  @JsonKey(name: '_id')
   final String id;
   final String userId;
   final List<CartItem> products;
@@ -20,6 +21,7 @@ class Cart {
 
 @JsonSerializable()
 class CartItem {
+  @JsonKey(name: 'productId')
   final String productId;
   final int quantity;
 

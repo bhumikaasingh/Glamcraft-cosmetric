@@ -19,10 +19,12 @@ class ApiEndpoints {
   static const String createOrder = "api/orders/create";
   static const String getOrders = "api/orders";
   static const String getSingleOrder = "api/orders/";
-  static const String getCart = "api/carts/";
+  static const String getCart = "api/carts";
   static const String createCart = "api/carts/create";
   static const String updateUserProfile = "api/user/update-profile/";
 
   static const String imageUrl = "http://10.1.16.134:5500/uploads/";
   static const String uploadImage = "auth/uploadImage";
+
+  static const String userId = "66847f3cb51bc68060b9ff86";
 }

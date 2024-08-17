@@ -36,7 +36,7 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
 
   final List<Widget> bottomScreens = [
     const HomeView(),
-    const CartView(),
+    CartView(),
     const ShopView(),
     const ProfileView(),
   ];
