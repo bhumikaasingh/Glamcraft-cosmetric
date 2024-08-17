@@ -10,7 +10,7 @@ import 'package:final_assignment/features/profile/presentation/view/profile_view
 import 'package:final_assignment/features/sensors/domain/usecases/double_shake_use_case.dart';
 import 'package:final_assignment/features/sensors/domain/usecases/gyroscope_usecase.dart';
 import 'package:final_assignment/features/product/presentation/view/shop_view.dart';
-
+import 'package:final_assignment/features/favourite/presentation/view/favourite_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -35,6 +35,7 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
   final List<Widget> bottomScreens = [
     const HomeView(),
     CartView(),
+    const FavouriteView(),
     const ShopView(),
     ProfileView(),
   ];
@@ -116,6 +117,8 @@ class _HomePageViewState extends ConsumerState<HomePageView> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favourite'),
           BottomNavigationBarItem(
               icon: Icon(Icons.local_convenience_store_outlined),
               label: 'Shop'),
